@@ -242,6 +242,8 @@ wcag2aa
 
 O widget de chat foi excluído da análise por ser um componente externo à experiência principal testada.
 
+O teste identifica uma violação crítica da regra `button-name`: o botão de mostrar ou ocultar a senha não possui texto nem nome acessível, como `aria-label`, `aria-labelledby` ou `title`. A violação foi mantida no resultado, sem exceções, para demonstrar a detecção de um problema real de acessibilidade na aplicação.
+
 ## Como Instalar
 
 Instale as dependências:
@@ -322,6 +324,33 @@ use: {
 ```
 
 Nos testes de API, as respostas são anexadas ao relatório com `testInfo.attach`, usando o tipo `application/json`.
+
+### Falhas Conhecidas
+
+Algumas falhas observadas na pipeline são mantidas intencionalmente porque representam comportamentos reais da aplicação ou do ambiente de execução.
+
+#### Violação de Acessibilidade
+
+O teste da tela de login falha ao detectar que o botão de mostrar ou ocultar a senha não possui nome acessível. O axe classifica a violação `button-name` como crítica e relacionada aos critérios WCAG 2.1 A.
+
+Como a aplicação testada é externa, o teste não altera nem ignora esse resultado. A correção esperada no produto seria fornecer um nome acessível ao controle, por exemplo:
+
+```html
+<button type="button" aria-label="Mostrar senha">
+```
+
+#### Proteção Antibot no Login E2E
+
+O cenário `deve realizar login com credenciais válidas` pode falhar nos runners do GitHub Actions porque o Cloudflare apresenta uma verificação de segurança para confirmar que o acesso não é automatizado.
+
+Quando isso acontece, o fluxo não chega à área autenticada e a asserção do menu `My account` falha. A screenshot, o vídeo e o trace registram a página de verificação apresentada pelo Cloudflare.
+
+Essa falha não é contornada pelo teste porque CAPTCHA e mecanismos antibot não devem ser automatizados ou burlados. Em um ambiente controlado, a solução adequada seria liberar os runners de CI, desabilitar o desafio no ambiente de testes ou usar uma configuração específica fornecida pelo responsável pela aplicação.
+
+Portanto, uma execução vermelha da pipeline pode representar:
+
+- uma violação real de acessibilidade detectada pelo axe;
+- o bloqueio do fluxo de login pela proteção antibot do ambiente externo.
 
 ## CI/CD
 
