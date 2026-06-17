@@ -342,9 +342,10 @@ Jobs configurados:
 api-tests
 e2e-tests
 accessibility-tests
+publish-reports
 ```
 
-Os jobs rodam em paralelo para acelerar o feedback.
+Os jobs de teste rodam em paralelo para acelerar o feedback. Ao final da execução em `main` ou `master`, o job `publish-reports` consolida os relatórios HTML e publica o resultado no GitHub Pages.
 
 ### Job API
 
@@ -418,22 +419,57 @@ Em caso de falha, também publica:
 test-results-accessibility
 ```
 
+### Job Publicação dos Relatórios
+
+O job `publish-reports` executa somente em push para `main` ou `master`. Ele baixa os relatórios gerados pelos jobs anteriores, monta uma página inicial e publica tudo no GitHub Pages.
+
+Estrutura publicada:
+
+```text
+/
++-- index.html
++-- api/
++-- e2e/
++-- accessibility/
+```
+
+A página inicial contém links para:
+
+- relatório de API;
+- relatório E2E web;
+- relatório de acessibilidade.
+
 ## Como visualizar relatórios na pipeline
 
-Após a execução no GitHub Actions, os relatórios ficam disponíveis como artifacts da própria execução.
+Após a execução no GitHub Actions, os relatórios ficam disponíveis diretamente no GitHub Pages do repositório.
+
+Para isso, o GitHub Pages do repositório deve estar configurado para publicar a partir do GitHub Actions:
+
+```text
+Settings > Pages > Build and deployment > Source > GitHub Actions
+```
 
 Passo a passo:
 
 1. Acesse a aba `Actions` do repositório.
 2. Abra a execução desejada do workflow `Automated Tests`.
-3. Na página da execução, consulte o resumo dos jobs para ver quais artifacts foram publicados.
-4. Role até a seção `Artifacts`.
-5. Baixe o relatório desejado:
-   - `playwright-report-api`;
-   - `playwright-report-e2e`;
-   - `playwright-report-accessibility`.
-6. Extraia o arquivo baixado.
-7. Abra o arquivo `index.html` no navegador.
+3. Abra o job `Publish reports to GitHub Pages`.
+4. No resumo do job, acesse a URL publicada em `Reports index`.
+
+URLs esperadas após a publicação:
+
+```text
+https://<usuario-ou-org>.github.io/<repositorio>/
+https://<usuario-ou-org>.github.io/<repositorio>/api/
+https://<usuario-ou-org>.github.io/<repositorio>/e2e/
+https://<usuario-ou-org>.github.io/<repositorio>/accessibility/
+```
+
+Os artifacts continuam sendo publicados pela pipeline como alternativa de consulta:
+
+- `playwright-report-api`;
+- `playwright-report-e2e`;
+- `playwright-report-accessibility`.
 
 Em caso de falha, também ficam disponíveis artifacts com evidências técnicas:
 
