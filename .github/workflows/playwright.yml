@@ -44,6 +44,18 @@ jobs:
           path: test-results/
           retention-days: 30
 
+      - name: Add API report summary
+        if: ${{ always() }}
+        run: |
+          echo "## API test report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The Playwright HTML report is available in the workflow artifacts." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Artifact: playwright-report-api" >> $GITHUB_STEP_SUMMARY
+          echo "- Failure evidence: test-results-api" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Download the artifact, extract it, and open index.html in a browser." >> $GITHUB_STEP_SUMMARY
+
   e2e-tests:
     name: E2E web tests
     runs-on: ubuntu-latest
@@ -84,6 +96,18 @@ jobs:
           path: test-results/
           retention-days: 30
 
+      - name: Add E2E report summary
+        if: ${{ always() }}
+        run: |
+          echo "## E2E test report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The Playwright HTML report is available in the workflow artifacts." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Artifact: playwright-report-e2e" >> $GITHUB_STEP_SUMMARY
+          echo "- Failure evidence: test-results-e2e" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Download the artifact, extract it, and open index.html in a browser." >> $GITHUB_STEP_SUMMARY
+
   accessibility-tests:
     name: Accessibility tests
     runs-on: ubuntu-latest
@@ -123,3 +147,15 @@ jobs:
           name: test-results-accessibility
           path: test-results/
           retention-days: 30
+
+      - name: Add accessibility report summary
+        if: ${{ always() }}
+        run: |
+          echo "## Accessibility test report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The Playwright HTML report is available in the workflow artifacts." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Artifact: playwright-report-accessibility" >> $GITHUB_STEP_SUMMARY
+          echo "- Failure evidence: test-results-accessibility" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Download the artifact, extract it, and open index.html in a browser." >> $GITHUB_STEP_SUMMARY

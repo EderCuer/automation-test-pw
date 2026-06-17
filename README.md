@@ -418,73 +418,27 @@ Em caso de falha, também publica:
 test-results-accessibility
 ```
 
-## Mapeamento com o Enunciado
+## Como visualizar relatórios na pipeline
 
-### Item 1 - Testes Automatizados de API
+Após a execução no GitHub Actions, os relatórios ficam disponíveis como artifacts da própria execução.
 
-Atendido por:
+Passo a passo:
 
-```text
-tests/api/products/products.api.spec.js
-tests/api/users/users.api.spec.js
-api/clients/
-utils/apiAssertions.js
-```
+1. Acesse a aba `Actions` do repositório.
+2. Abra a execução desejada do workflow `Automated Tests`.
+3. Na página da execução, consulte o resumo dos jobs para ver quais artifacts foram publicados.
+4. Role até a seção `Artifacts`.
+5. Baixe o relatório desejado:
+   - `playwright-report-api`;
+   - `playwright-report-e2e`;
+   - `playwright-report-accessibility`.
+6. Extraia o arquivo baixado.
+7. Abra o arquivo `index.html` no navegador.
 
-O projeto valida:
+Em caso de falha, também ficam disponíveis artifacts com evidências técnicas:
 
-- múltiplos endpoints;
-- diferentes métodos HTTP: `GET`, `POST`, `PUT`, `DELETE`;
-- status code;
-- headers;
-- corpo da resposta;
-- fluxos positivos;
-- fluxos negativos;
-- relatório HTML com evidências.
+- `test-results-api`;
+- `test-results-e2e`;
+- `test-results-accessibility`.
 
-### Item 2 - Testes End-To-End
-
-Atendido por:
-
-```text
-tests/e2e/login/login.spec.js
-tests/e2e/checkout/checkout.spec.js
-pages/
-```
-
-O projeto valida:
-
-- login positivo;
-- login negativo;
-- campos obrigatórios;
-- fluxo completo de checkout;
-- carrinho;
-- endereço;
-- pagamento;
-- finalização de compra;
-- erro esperado em pagamento inválido;
-- Page Object Pattern;
-- evidências em falhas.
-
-### Evoluções de Qualidade
-
-Também foram incluídos:
-
-- cenário automatizado de acessibilidade;
-- asserts negativos E2E mais fortes;
-- evidências de falha explícitas no pipeline.
-
-## Observações Técnicas
-
-- O enunciado menciona Cucumber para E2E, mas este projeto usa Playwright Test puro por decisão técnica.
-- Playwright Test reduz complexidade, pois possui fixtures, asserts, runner, retries e reporter integrados.
-- A abordagem mantém os testes legíveis sem adicionar uma camada BDD artificial.
-
-## Comandos Rápidos
-
-```bash
-npm ci
-npx playwright install
-npm run test:all
-npx playwright show-report
-```
+Esses artifacts incluem arquivos como screenshots, vídeos e traces, conforme a configuração do Playwright.
