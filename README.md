@@ -449,6 +449,8 @@ Para isso, o GitHub Pages do repositório deve estar configurado para publicar a
 Settings > Pages > Build and deployment > Source > GitHub Actions
 ```
 
+Essa configuração precisa ser feita uma vez no repositório. Caso contrário, o job pode falhar na etapa `Configure GitHub Pages` com erro `Get Pages site failed` ou `Not Found`.
+
 Passo a passo:
 
 1. Acesse a aba `Actions` do repositório.
