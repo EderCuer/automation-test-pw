@@ -70,5 +70,8 @@ export class CheckoutPage {
     async expectInvalidCardNumber() {
         await expect(this.page.getByText('Invalid card number format.')).toBeVisible();
         await expect(this.finishButton).toBeDisabled();
+        await expect(this.page.getByText('Payment was successful')).toBeHidden();
+        await expect(this.paymentMethodSelect).toBeVisible();
+        await expect(this.cardNumberInput).toBeVisible();
     }
 }

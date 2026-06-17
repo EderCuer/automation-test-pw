@@ -24,11 +24,16 @@ export class LoginPage {
     }
 
     async expectLoginError(message) {
+        await expect(this.page).toHaveURL(/\/auth\/login$/);
         await expect(this.loginError).toHaveText(message);
+        await expect(this.page.getByTestId('nav-menu')).toBeHidden();
+        await expect(this.page.getByText('My account')).toBeHidden();
     }
 
     async expectRequiredFieldMessages() {
+        await expect(this.page).toHaveURL(/\/auth\/login$/);
         await expect(this.page.getByText('Email is required')).toBeVisible();
         await expect(this.page.getByText('Password is required')).toBeVisible();
+        await expect(this.page.getByTestId('nav-menu')).toBeHidden();
     }
 }
