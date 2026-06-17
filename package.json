@@ -1,0 +1,19 @@
+{
+    "name": "automation-test-pw",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test:all": "playwright test",
+        "test:api": "playwright test tests/api",
+        "test:web": "playwright test tests/e2e",
+        "test:ui": "playwright test --ui"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@playwright/test": "^1.61.0",
+        "@types/node": "^25.9.3"
+    }
+}
