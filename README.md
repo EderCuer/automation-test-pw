@@ -83,8 +83,6 @@ Requisito: Node.js 20 ou superior.
 npm ci
 ```
 
-O script `postinstall` instala automaticamente o Chromium usado pelo Playwright.
-
 ## Execução
 
 ```bash
