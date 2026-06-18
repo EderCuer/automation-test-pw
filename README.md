@@ -114,7 +114,7 @@ Em caso de falha, são mantidos:
 
 ## CI/CD
 
-O workflow `.github/workflows/playwright.yml` executa automaticamente em pushes e pull requests para `main`.
+O workflow `.github/workflows/playwright.yml` executa em pushes e pull requests para `main` e também pode ser iniciado manualmente pela aba `Actions`.
 
 Os testes são divididos em jobs paralelos:
 
