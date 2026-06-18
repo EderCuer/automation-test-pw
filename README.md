@@ -114,7 +114,7 @@ Em caso de falha, são mantidos:
 
 ## CI/CD
 
-O workflow `.github/workflows/playwright.yml` executa automaticamente em pushes e pull requests para `main` ou `master`.
+O workflow `.github/workflows/playwright.yml` executa automaticamente em pushes e pull requests para `main`.
 
 Os testes são divididos em jobs paralelos:
 
@@ -122,17 +122,7 @@ Os testes são divididos em jobs paralelos:
 - E2E;
 - acessibilidade.
 
-Após pushes para `main` ou `master`, os relatórios são reunidos e publicados no GitHub Pages:
-
-```text
-https://<usuario-ou-org>.github.io/<repositorio>/
-```
-
-Para habilitar a publicação:
-
-```text
-Settings > Pages > Build and deployment > Source > GitHub Actions
-```
+Após pushes para `main`, os relatórios são reunidos e publicados no GitHub Pages.
 
 Os relatórios também permanecem disponíveis como artifacts da execução. As evidências de falha são publicadas nos artifacts `test-results-api`, `test-results-e2e` e `test-results-accessibility`.
 
@@ -147,5 +137,3 @@ O teste permanece vermelho enquanto a aplicação mantiver o botão de exibiçã
 O cenário `deve realizar login com credenciais válidas` pode ser bloqueado pelo Cloudflare nos runners do GitHub Actions. Nesse caso, a aplicação exibe uma verificação contra robôs e o fluxo não alcança a área autenticada.
 
 CAPTCHA e proteções antibot não são burlados pelos testes. A screenshot, o vídeo e o trace permitem diferenciar esse bloqueio de uma falha funcional do login.
-
-Mesmo com testes reprovados, o workflow usa `always()` e `!cancelled()` para publicar os relatórios e as evidências no GitHub Pages.
